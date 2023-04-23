@@ -47,6 +47,7 @@ while True:
                    1, (255,0,0), 2, cv2.LINE_AA)
         dots.append(red_dot)
 
+
     # blue
     clr_low = (90,120,70)
     clr_high = (140,255,255)
@@ -77,6 +78,7 @@ while True:
                    1, (255,0,0), 2, cv2.LINE_AA)
         dots.append(green_dot)
 
+    
     buildSquare(frame, dots)
 
     play()
