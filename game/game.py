@@ -7,12 +7,17 @@ game = np.zeros((700, 500, 3), dtype= np.uint8() )
 dmg_field = np.zeros( (game.shape[0], game.shape[1]), dtype = np.uint8())
 
 class Controller:
+    """
+     Тупо хранит позицию по x
+    """
     CONTROLLER = 430
 
 class Player:
+    game = game
+    
     x_pos = 250
     y_pos = 650
-    
+      
     size_x = 100
     size_y = 30
 
@@ -26,10 +31,10 @@ class Player:
     color = (150, 250, 0)
         
     def draw(self):
-        cv2.rectangle(game, (self.x,self.y), (self.x+ self.size_x, self.y+self.size_y), self.color, -1)
+        cv2.rectangle(self.game, (self.x,self.y), (self.x+ self.size_x, self.y+self.size_y), self.color, -1)
         
     def destroy(self):
-        cv2.rectangle(game, (self.x,self.y), (self.x+ self.size_x, self.y+self.size_y), (0,0,0), -1)
+        cv2.rectangle(self.game, (self.x,self.y), (self.x+ self.size_x, self.y+self.size_y), (0,0,0), -1)
 
     def move(self):
         self.destroy()
@@ -211,13 +216,30 @@ def play():
 
 if __name__ == '__main__':
     r = Rect()
+    
+     # нужна для теста отрисовки
+    test_zone = np.zeros((700, 500, 3), dtype= np.uint8() )
+    
+    
+    test_player = Player()
+    test_player.game = test_zone
+    
+    def test(key = None):
+        if key == ord('a'):
+            Controller.CONTROLLER -= 10
+        if key == ord('d'):
+            Controller.CONTROLLER += 10
+        test_player.move()
+        
     while True:
         cv2.imshow('game' , game)
         cv2.imshow('dmg' , dmg_field)
-
+        cv2.imshow('test' , test_zone)
+        
         play()
         
         key = cv2.waitKey(1)
+        test(key)
         if key == 27:
             break
 
